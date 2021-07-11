@@ -3,6 +3,8 @@ from django.db import models
 
 from .manager import CustomUserModelManager, CustomUserManager
 
+from django.core.exceptions import ValidationError
+
 
 class CustomUserModel(AbstractBaseUser, PermissionsMixin):
 
@@ -62,3 +64,28 @@ class CustomUserModel(AbstractBaseUser, PermissionsMixin):
         "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always
         return self.is_admin
+
+
+# Following model
+class FollowingModel(models.Model):
+
+    # Who Is Following
+    follower = models.ForeignKey(
+        CustomUserModel, on_delete=models.CASCADE, related_name="follower")
+
+    # To Whom he is following
+    following = models.ForeignKey(
+        CustomUserModel, on_delete=models.CASCADE, related_name="following")
+
+    def __str__(self):
+        return f"{self.follower} follows {self.following}"
+
+    def clean(self):
+        if self.follower == self.following:
+            raise ValidationError("Cannot follow themselves")
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['follower', 'following'], name="unique_followers")
+        ]
