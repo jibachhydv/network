@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 
-from .models import CustomUserModel as MyUser
+from .models import CustomUserModel
 
 
 class UserCreationForm(forms.ModelForm):
@@ -18,7 +18,7 @@ class UserCreationForm(forms.ModelForm):
         label='Password confirmation', widget=forms.PasswordInput)
 
     class Meta:
-        model = MyUser
+        model = CustomUserModel
         fields = ('first_name', 'last_name', 'email', 'is_active', 'is_admin')
 
     def clean_password2(self):
@@ -46,7 +46,7 @@ class UserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField()
 
     class Meta:
-        model = MyUser
+        model = CustomUserModel
         fields = ('first_name', 'last_name', 'email', 'password',
                   'is_active', 'is_admin',)
 
@@ -60,12 +60,12 @@ class UserAdmin(BaseUserAdmin):
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
     list_display = ('first_name', 'last_name', 'email',
-                    'is_admin', 'is_active', 'is_staff')
+                    'is_admin', 'is_active',)
     list_filter = ('is_admin', 'is_active')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name')}),
-        ('Permissions', {'fields': ('is_admin', 'is_active', 'is_staff')}),
+        ('Permissions', {'fields': ('is_admin', 'is_active',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
@@ -81,9 +81,8 @@ class UserAdmin(BaseUserAdmin):
 
 
 # Now register the new UserAdmin...
-admin.site.register(MyUser, UserAdmin)
+admin.site.register(CustomUserModel, UserAdmin)
 
 
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
-admin.site.unregister(Group)
