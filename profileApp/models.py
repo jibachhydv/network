@@ -17,7 +17,7 @@ class Profile(models.Model):
     dob = models.DateField(verbose_name="Date of Birth")
 
     # school name
-    school_name = models.CharField(verbose_name="School Name")
+    school_name = models.CharField(verbose_name="School Name", max_length=500)
 
     def __str__(self):
         return f"Profile of {self.user}"
