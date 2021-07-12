@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'profileApp',
 
     # Third Party Apps
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
