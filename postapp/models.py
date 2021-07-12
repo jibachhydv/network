@@ -25,6 +25,7 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-created_date']
+        db_table = "Post"
 
     # implement get_absolute_url
     # TODO
@@ -49,6 +50,7 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ['-created_at', ]
+        db_table = "Post Comment"
 
 
 class LikeModel(models.Model):
@@ -64,10 +66,13 @@ class LikeModel(models.Model):
     def __str__(self):
         return f"{self.user} liked {self.post}"
 
-    # Unique Constraints Between Post ----> User
     class Meta:
+        # Unique Constraints Between Post ----> User
         constraints = [
             models.UniqueConstraint(
                 fields=['user', 'post'], name="one like for one user in each post"
             )
         ]
+
+        # table name
+        db_table = "Post Like"
