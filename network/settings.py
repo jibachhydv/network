@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     # Local Apps
     'authApp',
     'postapp',
+    'profileApp',
 
     # Third Party Apps
 ]
