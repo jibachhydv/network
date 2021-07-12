@@ -50,25 +50,7 @@ class Profile(models.Model):
     def __str__(self):
         return f"Profile of {self.user}"
 
-    # def save(self, *args, **kwargs):
-
-    #     # opening the uploaded image
-    #     im = Image.open(self.profile_picture)
-
-    #     output = BytesIO()
-
-    #     # resize or modify the image
-    #     im = im.resize((10, 10))
-
-    #     # after modification, save it to the output
-    #     im.save(output, format='JPEG', quality=10, optimize=True)
-
-    #     output.seek(0)
-    #     self.image = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.profile_picture.name.split('.')[0], 'image/jpeg',
-    #                                       sys.getsizeof(output), None)
-
-    #     super(Profile, self).save(*args, **kwargs)
-
+    
     def save(self, *args, **kwargs):
 
         if self.profile_picture:
