@@ -12,7 +12,7 @@ urlpatterns = [
 
     # POST App Urls
     path('', include('postapp.urls')),
-    
+
     # Authentication Urls
     url(r'^auth/', include("djoser.urls")),
     url(r'^auth/', include('djoser.urls.jwt')),
