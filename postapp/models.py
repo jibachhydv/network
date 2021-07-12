@@ -63,3 +63,11 @@ class LikeModel(models.Model):
 
     def __str__(self):
         return f"{self.user} liked {self.post}"
+
+    # Unique Constraints Between Post ----> User
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'post'], name="one like for one user in each post"
+            )
+        ]
