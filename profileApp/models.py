@@ -38,7 +38,7 @@ class Profile(models.Model):
 
     # Profile Picture
     profile_picture = models.ImageField(
-        verbose_name="Profile picture", upload_to="UploadTo('profile_photo')", blank=True, null=True)  # default='profile_photo/default.webp')
+        verbose_name="Profile picture", upload_to='profile_photo', blank=True, null=True)
 
     # DOB
     dob = models.DateField(verbose_name="Date of Birth", blank=True, null=True)
