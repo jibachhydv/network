@@ -7,7 +7,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Profile App Urls
-    path('profiles/', include('profileApp.urls'))
+    path('profiles/', include('profileApp.urls')),
+
+    # POST App Urls
+    path('', include('postapp.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -11,7 +11,7 @@ class Post(models.Model):
         verbose_name="Post Text", blank=False, null=False)
 
     # post author
-    post_author = models.ForeignKey(
+    author = models.ForeignKey(
         to=User, on_delete=models.CASCADE, related_name='author')
 
     # post created at
