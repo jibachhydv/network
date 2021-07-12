@@ -1,4 +1,5 @@
 from pathlib import Path
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,6 +34,10 @@ INSTALLED_APPS = [
 
     # Third Party Apps
     'rest_framework',
+    'djoser',
+    'rest_framework_simplejwt',
+    'corsheaders',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +128,67 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Register the Custom user Model
 AUTH_USER_MODEL = 'authApp.CustomUserModel'
+
+# Rest Framework Settings
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        #   'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+
+# Cors Setting
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+)
+
+# Djoser Setting
+DJOSER = {
+    # force user to enter password twice while creating
+    'USER_CREATE_PASSWORD_RETYPE': True,
+
+    # Login field require emails
+    'LOGIN_FIELD': 'email',
+
+    # Send Confirmation email while creating new account
+    'SEND_CONFIRMATION_EMAIL': True,
+
+    # Send Activation email
+    'SEND_ACTIVATION_EMAIL': True,
+
+    # ACTIVATION URL
+    'ACTIVATION_URL': 'activate/{uid}/{token}/',
+    
+    # SERIALIZERS LIST
+    'SERIALIZERS': {
+        'user': 'authApp.serializers.UserCreateSerializer',
+        'user_create': 'authApp.serializers.UserCreateSerializer',
+        'current_user': 'authApp.serializers.UserCreateSerializer',
+    },
+    
+    # Permission djoser
+    'PERMISSIONS': {
+        
+    }
+
+}
+
+
+# Email Setting
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'jibachhydv18@gmail.com'
+EMAIL_HOST_PASSWORD = 'fbsosxudgnctggpz'
+EMAIL_USE_TLS = True
+
+
+# Simple Jwt Setting
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=15),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=15),
+}
